@@ -1,7 +1,7 @@
 ﻿@inherits MdcInputComponentBase<string>
 @inject IJSRuntime jsRuntime
     
-<div @ref="textFieldElem" class="mdc-text-field  mdc-text-field--textarea">
+<div @ref="textFieldElem" @ref:suppressField class="mdc-text-field  mdc-text-field--textarea">
     <textarea id=@id class="mdc-text-field__input @FieldClass"
            @bind="@CurrentValue" rows="@Rows" cols="@Cols" />
 
@@ -11,11 +11,11 @@
 
 @functions {
     string id = Guid.NewGuid().ToString();
-    ElementRef textFieldElem;
+    ElementReference textFieldElem;
 
-    [Parameter] string Label { get; set; }
-    [Parameter] int Rows { get; set; } = 4;
-    [Parameter] int Cols { get; set; } = 40;
+    [Parameter] public string Label { get; set; }
+    [Parameter] public int Rows { get; set; } = 4;
+    [Parameter] public int Cols { get; set; } = 40;
 
     protected override Task OnAfterFirstRenderAsync()
         => jsRuntime.InvokeAsync<object>(
